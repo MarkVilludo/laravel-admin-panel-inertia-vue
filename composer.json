@@ -36,12 +36,5 @@
     },
     "config": {
         "sort-packages": true
-    },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "MarkVilludo\\AdminPanelInertiaVue\\CMSServicedProvider"
-            ]
-        }
     }
 }
