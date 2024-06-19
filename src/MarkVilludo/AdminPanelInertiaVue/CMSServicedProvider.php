@@ -2,9 +2,9 @@
 
 namespace MarkVilludo\AdminPanelInertiaVue;
 
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
-class CMSServicedProvider extends BaseServiceProvider
+class CMSServicedProvider extends ServiceProvider
 {
     
     /**
