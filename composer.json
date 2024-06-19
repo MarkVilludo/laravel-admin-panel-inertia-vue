@@ -40,7 +40,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MarkVilludo\\AdminPanelInertiaVue\\PermissionServiceProvider"
+                "MarkVilludo\\AdminPanelInertiaVue\\CMSServicedProvider"
             ]
         }
     }
