@@ -4,7 +4,8 @@ namespace MarkVilludo\AdminPanelInertiaVue;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
-class ServiceProvider extends BaseServiceProvider {
+class CMSServicedProvider extends BaseServiceProvider
+{
     
     /**
      * Bootstrap the application services.
