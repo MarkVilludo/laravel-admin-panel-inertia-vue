@@ -25,12 +25,7 @@
         "tightenco/ziggy": "^2.0"
     },
     "autoload": {
-        "psr-4": {
-            "MarkVilludo\\AdminPanelInertiaVue\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
+        "psr-0": {
             "MarkVilludo\\AdminPanelInertiaVue\\": "src/"
         }
     },
