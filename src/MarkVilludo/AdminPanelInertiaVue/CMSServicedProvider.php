@@ -15,7 +15,6 @@ class CMSServicedProvider extends BaseServiceProvider
     public function boot()
     {      
         // publish assets and layouts
-        $timestamp = date('Y_m_d_His', time());
         $this->publishes([
             __DIR__.'/../resources/assets' =>  resource_path('/'),
         ],'assets');
