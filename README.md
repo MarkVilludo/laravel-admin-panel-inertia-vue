@@ -1,7 +1,6 @@
 # Laravel Admin Panel Inertia Vue
 Laravel package to create laravel admin panel using inertia vue
 
-```
 ## Installation
 
 Require this package with composer.
