@@ -1,6 +1,8 @@
 {
     "name": "mark-villudo/laravel-admin-panel-inertia-vue",
     "description": "Laravel package to create laravel admin panel using inertia vue",
+    "license": "MIT",
+    "type": "library",
     "keywords": [
         "laravel",
         "admin-panel",
@@ -12,6 +14,7 @@
             "name": "Mark Villudo"
         }
     ],
+    "minimum-stability": "dev",
     "require": {
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^1.0",
@@ -20,13 +23,8 @@
         "tightenco/ziggy": "^2.0"
     },
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "MarkVilludo\\AdminPanelInertiaVue\\": "src/"
         }
-    },
-    "require": {
-        "mark-villudo/laravel-admin-panel-inertia-vue": "^1.0"
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    }
 }
