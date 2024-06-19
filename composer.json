@@ -24,5 +24,9 @@
             "MarkVilludo\\AdminPanelInertiaVue\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "require": {
+        "mark-villudo/laravel-admin-panel-inertia-vue": "^1.0"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
 }
