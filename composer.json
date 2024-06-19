@@ -1,0 +1,24 @@
+{
+    "name": "mark-villudo/laravel-admin-panel-inertia-vue",
+    "description": "Laravel package API for user activity logs",
+    "keywords": [
+        "laravel",
+        "admin-panel",
+        "cms",
+        "laravel-admin-panel-inertia-vue"
+    ],
+    "authors": [
+        {
+            "name": "Mark Villudo"
+        }
+    ],
+    "require": {
+        "php": ">=8.2.0"
+    },
+    "autoload": {
+        "psr-0": {
+            "MarkVilludo\\AdminPanelInertiaVue\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
