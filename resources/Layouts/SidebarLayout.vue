@@ -6,7 +6,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fa-solid fa-music"></i>
         </div>
-        <div class="sidebar-brand-text mx-0">ADMIN PANEL <sup><small>Content Management System</small></sup></div>
+        <div class="sidebar-brand-text mx-0">ADMIN PANEL <sup><small>Content Management</small></sup></div>
         </Link>
 
         <hr class="sidebar-divider my-0">
