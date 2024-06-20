@@ -17,7 +17,7 @@ composer require mark-villudo/laravel-admin-panel-inertia-vue
 
 ### Publish assets and layouts
 
-Register Service Provider in bootstrap/providers.php
+Register Service Provider in bootstrap/providers.php (optional) because all providers in package is autoload
 
 ```bash
     MarkVilludo\AdminPanelInertiaVue\CMSServicedProvider::class,
