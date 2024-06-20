@@ -267,6 +267,7 @@ php artisan serve //serve laravel application
 
 ### Step 8
 Test it.
+![alt text](https://github.com/MarkVilludo/laravel-admin-panel-inertia-vue/blob/main/ss.png?raw=true)
 
 ## License
 
