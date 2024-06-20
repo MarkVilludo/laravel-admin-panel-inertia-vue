@@ -114,7 +114,7 @@ createInertiaApp({
 
 ```
 ### Step 2
-update `package json` for toast in devDependencies block, and dependencies block for `lodash`, `vue-sweetalert2` and `vue-tippy`
+update `package.json` for toast in devDependencies block, and dependencies block for `lodash`, `vue-sweetalert2` and `vue-tippy`
 ```bash
 "devDependencies": {
     "toastr": "^2.1.4",
@@ -169,52 +169,40 @@ export default defineConfig({
 Update the `resources/js/Layouts/AppLayout.vue`
 ```
 <template>
-
-    <!-- Page Wrapper -->
-    <div id="wrapper">
-
-        <!-- Sidebar -->
-            <SidebarLayout />
-        <!-- End of Sidebar -->
-
-        <!-- Content Wrapper -->
-        <div id="content-wrapper" class="d-flex flex-column">
-
-            <!-- Main Content -->
-            <div id="content">
-
-                <!-- Topbar -->
-                    <HeaderLayout :page_title="page_title" :page_icon="page_icon" />
-                <!-- End of Topbar -->
-
-                <!-- Begin Page Content -->
-                    <slot />
-                <!-- /.container-fluid -->
-
-            </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white shadow">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; IMSupport 2024</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+    <!-- Sidebar -->
+    <SidebarLayout />
+    <!-- End of Sidebar -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+        <!-- Topbar -->
+        <HeaderLayout :page_title="page_title" :page_icon="page_icon" />
+        <!-- End of Topbar -->
+        <!-- Begin Page Content -->
+        <slot />
+        <!-- /.container-fluid -->
+      </div>
+      <!-- End of Main Content -->
+      <!-- Footer -->
+      <footer class="sticky-footer bg-white shadow">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright &copy; IMSupport 2024</span>
+          </div>
         </div>
-        <!-- End of Content Wrapper -->
-
-        </div>
-        <!-- End of Page Wrapper -->
-
-        <!-- Scroll to Top Button-->
-        <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-        </a>
-
+      </footer>
+      <!-- End of Footer -->
+    </div>
+    <!-- End of Content Wrapper -->
+  </div>
+  <!-- End of Page Wrapper -->
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
 </template>
 
 <script>
@@ -236,7 +224,7 @@ export default {
 ```
 
 ### Step 5
-Add css and js dependency in `app.blade.php`
+Add css and js dependency in `resources/views/app.blade.php`
 
 ```bash
 <head>
