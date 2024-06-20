@@ -16,11 +16,10 @@ class CMSServicedProvider extends ServiceProvider
     {      
         // publish assets and layouts
         $this->publishes([
-            __DIR__.'/../resources/assets' =>  resource_path('/'),
+            __DIR__.'/../../../resources/assets' =>  resource_path('/'),
         ],'assets');
-
         $this->publishes([
-            __DIR__.'/../resources/Layouts' =>  resource_path('/js'),
+            __DIR__.'/../../../resources/Layouts' =>  resource_path('/js'),
         ],'layouts');
     }
 
