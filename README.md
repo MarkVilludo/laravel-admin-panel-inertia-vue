@@ -16,6 +16,13 @@ composer require mark-villudo/laravel-admin-panel-inertia-vue
 
 
 ### Publish assets and layouts
+
+Register Service Provider in bootstrap/providers.php
+
+```bash
+    MarkVilludo\AdminPanelInertiaVue\CMSServicedProvider::class,
+```
+
 ```bash
 php artisan vendor:publish --provider="MarkVilludo\AdminPanelInertiaVue\CMSServiceProvider" --tag="assets"
 php artisan vendor:publish --provider="MarkVilludo\AdminPanelInertiaVue\CMSServiceProvider" --tag="layouts"
