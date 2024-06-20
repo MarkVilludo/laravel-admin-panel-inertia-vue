@@ -1,6 +1,11 @@
 # Laravel Admin Panel Inertia Vue
 Laravel package to create laravel admin panel using inertia vue
 
+## Author for CMS Template (Credits)
+
+- [@fmhorfilla](https://www.github.com/fmhorfilla)
+- [@janzcio](https://www.github.com/janzcio)
+
 ## Installation
 
 Require this package with composer.
