@@ -192,139 +192,139 @@
 </template>
 
 <script>
-import { Head, Link, router } from "@inertiajs/vue3";
-import AppLayout from "@/AdminLayouts/AppLayout.vue";
-import SearchLayout from "@/AdminLayouts/SearchLayout.vue";
-import PaginationLayout from "@/AdminLayouts/PaginationLayout.vue";
-import LoadingLayout from "@/AdminLayouts/LoadingLayout.vue";
-import toastr from 'toastr';
+    import { Head, Link, router } from "@inertiajs/vue3";
+    import AppLayout from "@/Layouts/AppLayout.vue";
+    import SearchLayout from "@/Layouts/SearchLayout.vue";
+    import PaginationLayout from "@/Layouts/PaginationLayout.vue";
+    import LoadingLayout from "@/Layouts/LoadingLayout.vue";
+    import toastr from "toastr";
 
-export default {
-    data() {
-        return {
-            loading: false,
-            viewMode: false,
-            editMode: false,
-            formShow: false,
-            action: "new",
-            form: {
-                agent_id: this.query_params.agentId,
-                message: null,
-                status: 1,
+    export default {
+        data() {
+            return {
+                loading: false,
+                viewMode: false,
+                editMode: false,
+                formShow: false,
+                action: "new",
+                form: {
+                    agent_id: this.query_params.agentId,
+                    message: null,
+                    status: 1,
+                },
+                error_form: {},
+            }
+    },
+        props: {
+            agents: Object,
+            permissions: Object,
+            filters: Object,
+            errors: Object,
+            response: null,
+            query_params : Array
+        },
+        components: {
+            Head, Link, AppLayout, SearchLayout, PaginationLayout, LoadingLayout,
+        },
+        methods: {
+            closeForm() {
+                this.formShow = false;
+                this.form = {
+                    agent_id: null,
+                    message: null,
+                    status: 1,
+                };
             },
-            error_form: {},
-        }
-},
-    props: {
-        agents: Object,
-        permissions: Object,
-        filters: Object,
-        errors: Object,
-        response: null,
-        query_params : Array
-    },
-    components: {
-        Head, Link, AppLayout, SearchLayout, PaginationLayout, LoadingLayout,
-    },
-    methods: {
-        closeForm() {
-            this.formShow = false;
-            this.form = {
-                agent_id: null,
-                message: null,
-                status: 1,
-            };
-        },
-        resetForm() {
-            this.viewMode = false,
-                this.editMode = false,
-                this.formShow = !this.formShow;
-        },
-        selectAction(data, action) {
-            if (action === "delete") {
-                this.formAction(data, 'delete');
-            } else {
-                this.form = { ...data };
-                this.formShow = true;
-                this.viewMode = action === "show";
-                this.editMode = action !== "show";
-            }
-        },
-        formAction(data, type) {
-
-            let method, url, ask, message;
-            switch (type) {
-                case 'status':
-                    method = 'PUT';
-                    url = 'permissions.status';
-                    ask = 'Are you sure you want to change the status?';
-                    message = 'Status has been updated.';
-                    break;
-                case 'delete':
-                    method = 'DELETE';
-                    url = 'permissions.destroy';
-                    ask = 'Are you sure you want to delete this item?';
-                    message = 'Item has been deleted.';
-                    break;
-                default:
-                    method = this.editMode ? 'PUT' : 'POST';
-                    url = this.editMode ? 'permissions.update' : 'permissions.store';
-                    ask = `Are you sure you want to ${this.editMode ? 'update' : 'save'} this item?`;
-                    message = this.editMode ? 'Work has been updated.' : 'Work has been saved.';
-            }
-            this.$swal({
-                text: ask,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: (type !== 'delete') ? '#512da8' : '#D81B60',
-                cancelButtonText: 'No <i class="bi bi-hand-thumbs-down"></i>',
-                confirmButtonText: '<i class="bi bi-hand-thumbs-up"></i> Yes'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    data._method = method;
-
-                    data.query_params = this.query_params;
-
-                    router.post(route(url, data.id), data, {
-                        onBefore: () => {
-                            this.loading = true;
-                        },
-                        onSuccess: (response) => {
-                            if (response.props.response == 'success') {
-                                this.$swal({
-                                    position: 'center',
-                                    icon: 'success',
-                                    text: message,
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                });
-                                this.formShow = false;
-                            }
-                        },
-                        onFinish: () => {
-                            this.loading = false;
-                        },
-                        onError: (error) => {
-                            try {
-                                this.error_form = Object.assign(this.error_form, error);
-                                Object.entries(error).forEach(([field, message]) => {
-                                    toastr.error(`${message}`);
-                                });
-                            } catch (err) {
-                                toastr.error(this.$t('unexpected_error'));
-                            }
-                        },
-                    });
+            resetForm() {
+                this.viewMode = false,
+                    this.editMode = false,
+                    this.formShow = !this.formShow;
+            },
+            selectAction(data, action) {
+                if (action === "delete") {
+                    this.formAction(data, 'delete');
+                } else {
+                    this.form = { ...data };
+                    this.formShow = true;
+                    this.viewMode = action === "show";
+                    this.editMode = action !== "show";
                 }
-            });
-        }
-    },
-    watch: {
-        modalShow: function (oldVal, newVal) {
-            this.error_form = {};
-        },
+            },
+            formAction(data, type) {
 
-    }
-};
+                let method, url, ask, message;
+                switch (type) {
+                    case 'status':
+                        method = 'PUT';
+                        url = 'permissions.status';
+                        ask = 'Are you sure you want to change the status?';
+                        message = 'Status has been updated.';
+                        break;
+                    case 'delete':
+                        method = 'DELETE';
+                        url = 'permissions.destroy';
+                        ask = 'Are you sure you want to delete this item?';
+                        message = 'Item has been deleted.';
+                        break;
+                    default:
+                        method = this.editMode ? 'PUT' : 'POST';
+                        url = this.editMode ? 'permissions.update' : 'permissions.store';
+                        ask = `Are you sure you want to ${this.editMode ? 'update' : 'save'} this item?`;
+                        message = this.editMode ? 'Work has been updated.' : 'Work has been saved.';
+                }
+                this.$swal({
+                    text: ask,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: (type !== 'delete') ? '#512da8' : '#D81B60',
+                    cancelButtonText: 'No <i class="bi bi-hand-thumbs-down"></i>',
+                    confirmButtonText: '<i class="bi bi-hand-thumbs-up"></i> Yes'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        data._method = method;
+
+                        data.query_params = this.query_params;
+
+                        router.post(route(url, data.id), data, {
+                            onBefore: () => {
+                                this.loading = true;
+                            },
+                            onSuccess: (response) => {
+                                if (response.props.response == 'success') {
+                                    this.$swal({
+                                        position: 'center',
+                                        icon: 'success',
+                                        text: message,
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                    });
+                                    this.formShow = false;
+                                }
+                            },
+                            onFinish: () => {
+                                this.loading = false;
+                            },
+                            onError: (error) => {
+                                try {
+                                    this.error_form = Object.assign(this.error_form, error);
+                                    Object.entries(error).forEach(([field, message]) => {
+                                        toastr.error(`${message}`);
+                                    });
+                                } catch (err) {
+                                    toastr.error(this.$t('unexpected_error'));
+                                }
+                            },
+                        });
+                    }
+                });
+            }
+        },
+        watch: {
+            modalShow: function (oldVal, newVal) {
+                this.error_form = {};
+            },
+
+        }
+    };
 
 </script>

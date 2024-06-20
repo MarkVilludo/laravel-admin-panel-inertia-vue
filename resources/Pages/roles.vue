@@ -224,224 +224,223 @@
 </template>
 
 <script>
-import { Head, Link, router } from "@inertiajs/vue3";
-import AppLayout from "@/AdminLayouts/AppLayout.vue";
-import SearchLayout from "@/AdminLayouts/SearchLayout.vue";
-import PaginationLayout from "@/AdminLayouts/PaginationLayout.vue";
-import LoadingLayout from "@/AdminLayouts/LoadingLayout.vue";
-import { CommonMixin } from '@mixins/CommonMixin';
-import toastr from 'toastr';
+    import { Head, Link, router } from "@inertiajs/vue3";
+    import AppLayout from "@/Layouts/AppLayout.vue";
+    import SearchLayout from "@/Layouts/SearchLayout.vue";
+    import PaginationLayout from "@/Layouts/PaginationLayout.vue";
+    import LoadingLayout from "@/Layouts/LoadingLayout.vue";
+    import toastr from "toastr";
 
-export default {
-    mixins: [CommonMixin],
-    data() {
-        return {
-            loading: false,
-            modalShow: false,
-            viewMode: false,
-            editMode: false,
-            formShow: false,
-            action: "new",
-            form: {
-                name: null,
-                status: 1,
-                selectedOptions: [],
-                isAll: false
+    export default {
+        mixins: [CommonMixin],
+        data() {
+            return {
+                loading: false,
+                modalShow: false,
+                viewMode: false,
+                editMode: false,
+                formShow: false,
+                action: "new",
+                form: {
+                    name: null,
+                    status: 1,
+                    selectedOptions: [],
+                    isAll: false
+                },
+
+                original_form: {},
+                error_form: {},
+                modules: [],
+                isAll: {},
+            }
+        },
+        props: {
+            agents: Object,
+            roles: Object,
+            permissions: Object,
+            filters: Object,
+            errors: Object,
+            response: null,
+            query_params: Array
+        },
+        components: {
+            Head, Link, AppLayout, SearchLayout, PaginationLayout, LoadingLayout,
+        },
+        created() {
+            window.addEventListener('keydown', this.escape);
+
+            this.modules = [...new Set(this.permissions.map((p) => p.module))];
+        },
+        methods: {
+            closeModal() {
+                this.modalShow = false;
             },
-
-            original_form: {},
-            error_form: {},
-            modules: [],
-            isAll: {},
-        }
-    },
-    props: {
-        agents: Object,
-        roles: Object,
-        permissions: Object,
-        filters: Object,
-        errors: Object,
-        response: null,
-        query_params: Array
-    },
-    components: {
-        Head, Link, AppLayout, SearchLayout, PaginationLayout, LoadingLayout,
-    },
-    created() {
-        window.addEventListener('keydown', this.escape);
-
-        this.modules = [...new Set(this.permissions.map((p) => p.module))];
-    },
-    methods: {
-        closeModal() {
-            this.modalShow = false;
-        },
-        resetForm() {
-            this.modalShow = !this.modalShow;
-            this.action = 'new';
-            this.form = {
-                name: null,
-                status: 1,
-                selectedOptions: [],
-            }
-        },
-        selectAction(data, action, type) {
-            this.action = action;
-            if (this.action == 'delete') {
-                if (type === 'multiple' && data.length <= 0) {
-                    toastr.error('unexpected_error');
-                    return false;
+            resetForm() {
+                this.modalShow = !this.modalShow;
+                this.action = 'new';
+                this.form = {
+                    name: null,
+                    status: 1,
+                    selectedOptions: [],
                 }
-
-                this.formAction(data, 'delete');
-            } else {
-                this.form = Object.assign(this.form, data);
-                this.form.selectedOptions = data.permissions.map(item => item.name)
-                this.original_form = Object.assign({}, data);
-                this.original_form.selectedOptions = data.permissions.map(item => item.name)
-                this.editMode = action === 'update' ? true : false;
-                this.viewMode = action === 'show' ? true : false;
-                this.modalShow = true;
-            }
-        },
-        formAction(data, type) {
-
-            let method, url, ask, message;
-            switch (type) {
-                case 'status':
-                    method = 'PUT';
-                    url = 'roles.status';
-                    ask = 'Are you sure you want to change the status?';
-                    message = 'Status has been updated.';
-                    break;
-                case 'delete':
-                    method = 'DELETE';
-                    url = 'roles.destroy';
-                    ask = 'Are you sure you want to delete this item?';
-                    message = 'Item has been deleted.';
-                    break;
-                default:
-                    method = this.editMode ? 'PUT' : 'POST';
-                    url = this.editMode ? 'roles.update' : 'roles.store';
-                    ask = `Are you sure you want to ${this.editMode ? 'update' : 'save'} this item?`;
-                    message = this.editMode ? 'Work has been updated.' : 'Work has been saved.';
-            }
-            this.$swal({
-                text: ask,
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: (type !== 'delete') ? '#512da8' : '#D81B60',
-                cancelButtonText: 'No <i class="bi bi-hand-thumbs-down"></i>',
-                confirmButtonText: '<i class="bi bi-hand-thumbs-up"></i> Yes'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    data._method = method;
-
-                    data.query_params = this.query_params;
-                    data.update_type = type;
-                    if (this.editMode && type !== 'status') {
-                        let isSame = this.compareObjects(data, this.original_form, ['name', 'status', 'selectedOptions']);
-
-                        if (isSame) {
-                            toastr.error(`Nothing is changed.`);
-                            return false;
-                        }
+            },
+            selectAction(data, action, type) {
+                this.action = action;
+                if (this.action == 'delete') {
+                    if (type === 'multiple' && data.length <= 0) {
+                        toastr.error('unexpected_error');
+                        return false;
                     }
 
-                    router.post(route(url, data.id), data, {
-                        onBefore: () => {
-                            this.loading = true;
-                        },
-                        onSuccess: (response) => {
-                            if (response.props.response == 'success') {
-                                this.$swal({
-                                    position: 'center',
-                                    icon: 'success',
-                                    text: message,
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                });
-                                this.modalShow = false;
-                            }
-                        },
-                        onFinish: () => {
-                            this.loading = false;
-                        },
-                        onError: (error) => {
-                            try {
-                                this.error_form = Object.assign(this.error_form, error);
-                                Object.entries(error).forEach(([field, message]) => {
-                                    toastr.error(`${message}`);
-                                });
-                            } catch (err) {
-                                toastr.error('unexpected_error');
-                            }
-                        },
-                    });
+                    this.formAction(data, 'delete');
+                } else {
+                    this.form = Object.assign(this.form, data);
+                    this.form.selectedOptions = data.permissions.map(item => item.name)
+                    this.original_form = Object.assign({}, data);
+                    this.original_form.selectedOptions = data.permissions.map(item => item.name)
+                    this.editMode = action === 'update' ? true : false;
+                    this.viewMode = action === 'show' ? true : false;
+                    this.modalShow = true;
                 }
-            });
-        },
-        escape(event) {
-            if (event.keyCode === 27) {
-                this.modalShow = false;
-            }
-        },
-        checkSameModules(item, moduleName) {
-            return item.module == moduleName;
-        },
-        handClickAll(isAllVal) {
-            console.log(123);
-            let currentIsAll = !isAllVal;
-            if (currentIsAll === true) {
-                const allNames = [...new Set(this.permissions.map((p) => p.name))];
-                this.form.selectedOptions = allNames;
-            } else {
-                this.form.selectedOptions = [];
-            }
-        },
-        handClickSubAll(isSubAll, moduleName) {
-            isSubAll = !isSubAll;
-            let permissionFilterModule = this.permissions
-                .filter((p) => p.module === moduleName)
-                .map((p) => p.name);
+            },
+            formAction(data, type) {
 
-            if (isSubAll) {
-                // console.log(permissionFilterModule, "permissionFilterModuleXXXXXXXXXXXX");
-                this.form.selectedOptions = [...new Set([...this.form.selectedOptions, ...permissionFilterModule])];
-            } else {
-                // Remove permissionFilterModule values from selectedOptions
-                this.form.selectedOptions = this.form.selectedOptions.filter(option => !permissionFilterModule.includes(option));
-            }
-        },
-    },
-    watch: {
-        modalShow: function (oldVal, newVal) {
-            this.error_form = {};
+                let method, url, ask, message;
+                switch (type) {
+                    case 'status':
+                        method = 'PUT';
+                        url = 'roles.status';
+                        ask = 'Are you sure you want to change the status?';
+                        message = 'Status has been updated.';
+                        break;
+                    case 'delete':
+                        method = 'DELETE';
+                        url = 'roles.destroy';
+                        ask = 'Are you sure you want to delete this item?';
+                        message = 'Item has been deleted.';
+                        break;
+                    default:
+                        method = this.editMode ? 'PUT' : 'POST';
+                        url = this.editMode ? 'roles.update' : 'roles.store';
+                        ask = `Are you sure you want to ${this.editMode ? 'update' : 'save'} this item?`;
+                        message = this.editMode ? 'Work has been updated.' : 'Work has been saved.';
+                }
+                this.$swal({
+                    text: ask,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: (type !== 'delete') ? '#512da8' : '#D81B60',
+                    cancelButtonText: 'No <i class="bi bi-hand-thumbs-down"></i>',
+                    confirmButtonText: '<i class="bi bi-hand-thumbs-up"></i> Yes'
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        data._method = method;
 
-            if (this.permissions.length > 0 && this.form.selectedOptions.length === this.permissions.length) {
-                this.form.isAll = true;
-            }
-        },
-        'form.selectedOptions': function (oldVal, newVal) {
-            if (this.permissions.length > 0 && this.form.selectedOptions.length === this.permissions.length) {
-                this.form.isAll = true;
-            } else {
-                this.form.isAll = false;
-            }
+                        data.query_params = this.query_params;
+                        data.update_type = type;
+                        if (this.editMode && type !== 'status') {
+                            let isSame = this.compareObjects(data, this.original_form, ['name', 'status', 'selectedOptions']);
 
-            for (const key in this.modules) {
-                let moduleName = this.modules[key];
-                let filter1 = this.permissions
+                            if (isSame) {
+                                toastr.error(`Nothing is changed.`);
+                                return false;
+                            }
+                        }
+
+                        router.post(route(url, data.id), data, {
+                            onBefore: () => {
+                                this.loading = true;
+                            },
+                            onSuccess: (response) => {
+                                if (response.props.response == 'success') {
+                                    this.$swal({
+                                        position: 'center',
+                                        icon: 'success',
+                                        text: message,
+                                        showConfirmButton: false,
+                                        timer: 2000,
+                                    });
+                                    this.modalShow = false;
+                                }
+                            },
+                            onFinish: () => {
+                                this.loading = false;
+                            },
+                            onError: (error) => {
+                                try {
+                                    this.error_form = Object.assign(this.error_form, error);
+                                    Object.entries(error).forEach(([field, message]) => {
+                                        toastr.error(`${message}`);
+                                    });
+                                } catch (err) {
+                                    toastr.error('unexpected_error');
+                                }
+                            },
+                        });
+                    }
+                });
+            },
+            escape(event) {
+                if (event.keyCode === 27) {
+                    this.modalShow = false;
+                }
+            },
+            checkSameModules(item, moduleName) {
+                return item.module == moduleName;
+            },
+            handClickAll(isAllVal) {
+                console.log(123);
+                let currentIsAll = !isAllVal;
+                if (currentIsAll === true) {
+                    const allNames = [...new Set(this.permissions.map((p) => p.name))];
+                    this.form.selectedOptions = allNames;
+                } else {
+                    this.form.selectedOptions = [];
+                }
+            },
+            handClickSubAll(isSubAll, moduleName) {
+                isSubAll = !isSubAll;
+                let permissionFilterModule = this.permissions
                     .filter((p) => p.module === moduleName)
                     .map((p) => p.name);
 
-                let allExist = filter1.every(item => this.form.selectedOptions.includes(item));
-
-                this.isAll[moduleName] = allExist;
-            }
+                if (isSubAll) {
+                    // console.log(permissionFilterModule, "permissionFilterModuleXXXXXXXXXXXX");
+                    this.form.selectedOptions = [...new Set([...this.form.selectedOptions, ...permissionFilterModule])];
+                } else {
+                    // Remove permissionFilterModule values from selectedOptions
+                    this.form.selectedOptions = this.form.selectedOptions.filter(option => !permissionFilterModule.includes(option));
+                }
+            },
         },
+        watch: {
+            modalShow: function (oldVal, newVal) {
+                this.error_form = {};
 
-    }
-};
+                if (this.permissions.length > 0 && this.form.selectedOptions.length === this.permissions.length) {
+                    this.form.isAll = true;
+                }
+            },
+            'form.selectedOptions': function (oldVal, newVal) {
+                if (this.permissions.length > 0 && this.form.selectedOptions.length === this.permissions.length) {
+                    this.form.isAll = true;
+                } else {
+                    this.form.isAll = false;
+                }
+
+                for (const key in this.modules) {
+                    let moduleName = this.modules[key];
+                    let filter1 = this.permissions
+                        .filter((p) => p.module === moduleName)
+                        .map((p) => p.name);
+
+                    let allExist = filter1.every(item => this.form.selectedOptions.includes(item));
+
+                    this.isAll[moduleName] = allExist;
+                }
+            },
+
+        }
+    };
 
 </script>
