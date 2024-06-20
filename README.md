@@ -26,6 +26,11 @@ Register Service Provider in bootstrap/providers.php
     MarkVilludo\AdminPanelInertiaVue\CMSServicedProvider::class,
 ```
 
+### Clear cache
+```
+php artisan optimize
+```
+
 ### Publish `resources/assets` and `resources/js/Layouts`
 
 ```bash
