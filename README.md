@@ -16,14 +16,19 @@ Laravel package to create laravel admin panel using inertia vue
 Require this package with composer.
 
 ```bash
-composer require mark-villudo/laravel-admin-panel-inertia-vue
+composer require "mark-villudo/laravel-admin-panel-inertia-vue @dev"
 ```
 
 ### Publish assets and layouts
-Register Service Provider in bootstrap/providers.php (optional) because all providers in package is autoload in laravel
+Register Service Provider in bootstrap/providers.php
 
 ```bash
     MarkVilludo\AdminPanelInertiaVue\CMSServicedProvider::class,
+```
+
+### Clear cache
+```
+php artisan optimize
 ```
 
 ### Publish `resources/assets` and `resources/js/Layouts`
@@ -37,7 +42,6 @@ php artisan vendor:publish --tag=cms-assets
 ## Setup Initial Pages in inertia (Pages, Components, etc)
 ```bash
 #This command installs Jetstream with server-side rendering support for Inertia.js, enhancing performance and SEO.
-
 php artisan jetstream:install inertia --ssr
 
 #This command runs all pending database migrations, creating the necessary tables and columns in the database.
