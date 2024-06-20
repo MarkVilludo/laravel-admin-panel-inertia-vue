@@ -8,10 +8,8 @@ Laravel package to create laravel admin panel using inertia vue
 
 ## Prerequisites
 
-```bash
-Laravel Project | fresh or existing
-Node version is above v20.10.0
-```
+- [Laravel Project | fresh or existing](https://laravel.com/)
+- [ Node version is above v20.10.0](https://nodejs.org/en/download/package-manager)
 
 ## Installation
 
