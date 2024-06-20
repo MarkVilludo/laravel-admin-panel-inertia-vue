@@ -22,7 +22,8 @@
         "inertiajs/inertia-laravel": "^1.0",
         "laravel/jetstream": "^5.1",
         "laravel/sanctum": "^4.0",
-        "tightenco/ziggy": "^2.0"
+        "tightenco/ziggy": "^2.0",
+        "spatie/laravel-permission": "^6.7"
     },
     "autoload": {
         "psr-0": {
