@@ -16,7 +16,7 @@ Laravel package to create laravel admin panel using inertia vue
 Require this package with composer.
 
 ```bash
-composer require mark-villudo/laravel-admin-panel-inertia-vue
+composer require "mark-villudo/laravel-admin-panel-inertia-vue @dev"
 ```
 
 ### Publish assets and layouts
