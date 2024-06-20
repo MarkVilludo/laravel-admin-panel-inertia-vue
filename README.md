@@ -127,7 +127,7 @@ update `package json` for toast in devDependencies block, and dependencies block
 ```
 
 ### Step 3
-update vite.config.js and add/update the ff code
+update `vite.config.js` and add/update the ff code
 ```bash
 import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
