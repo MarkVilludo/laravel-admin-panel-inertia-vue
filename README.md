@@ -351,11 +351,23 @@ Update the `app\Http\Middleware\HandleInertiaRequests.php`
 Update the `Resources/js/Pages/SidebarLayouts.vue` to include the Users, Roles, and Permissions Module
 
 ```bash
-    <li class="nav-item" :class="{ 'active': ['admin/Dashboard'].includes($page.component) }" 
-        v-if="$page.props.user.permissions.includes('dashboard')">
+    <li class="nav-item" :class="{ 'active': ['user-management.index'].includes($page.component) }" 
+        v-if="$page.props.user.permissions.includes('user_management')">
+            <Link class="nav-link" :href="'/user-management'">
+            <i class="fas fa-layer-group"></i>
+            <span>User Management</span></Link>
+    </li>
+    <li class="nav-item" :class="{ 'active': ['roles.index'].includes($page.component) }" 
+        v-if="$page.props.user.permissions.includes('roles')">
             <Link class="nav-link" :href="'/admin/dashboard'">
             <i class="fas fa-layer-group"></i>
-            <span>Dashboard</span></Link>
+            <span>Roles</span></Link>
+    </li>
+    <li class="nav-item" :class="{ 'active': ['permissions.index'].includes($page.component) }" 
+        v-if="$page.props.user.permissions.includes('permissions')">
+            <Link class="nav-link" :href="'/admin/dashboard'">
+            <i class="fas fa-layer-group"></i>
+            <span>Permissions</span></Link>
     </li>
 ```
 

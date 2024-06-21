@@ -18,14 +18,13 @@ class RoleSeeder extends Seeder
             'status' => 1,
         ]);
 
-        // Get all permissions with the sanctum guard
+        // Get all permissions with the sanctum guard //can access all permissions
         $allPermissions = Permission::where('guard_name', 'sanctum')->pluck('name');
         $roleAdmin->syncPermissions($allPermissions);
 
-
         // chat support role
         $roleSupport = Role::create([
-            'name' => 'Support',
+            'name' => 'User',
             'guard_name' => 'sanctum', // Ensure this matches your application's guard
             'status' => 1,
         ]);

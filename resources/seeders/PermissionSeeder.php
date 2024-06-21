@@ -23,7 +23,6 @@ class PermissionSeeder extends Seeder
             'activity_logs' => [],
             'permissions' => ['create', 'update', 'delete', 'view'],
             'system_settings' => ['update', 'view'],
-            'chat_support' => [],
         ];
 
         $permissionItems = [];
