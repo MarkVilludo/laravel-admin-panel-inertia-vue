@@ -31,8 +31,11 @@ class CMSServicedProvider extends ServiceProvider
             //services
             __DIR__.'/../../../resources/Services' => app_path('Services'),
 
+            //request
+            __DIR__.'/../../../resources/Requests' => app_path('Http/Requests'),
+
             //migration
-            __DIR__.'/../../../resources/migrations' => database_path('migrations'),
+            // __DIR__.'/../../../resources/migrations' => database_path('migrations'),
 
             //seeders
             __DIR__.'/../../../resources/seeders' => database_path('seeders'),
