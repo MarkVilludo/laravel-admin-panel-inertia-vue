@@ -266,6 +266,69 @@ php artisan serve //serve laravel application
 Test it.
 ![alt text](https://github.com/MarkVilludo/laravel-admin-panel-inertia-vue/blob/main/img/ss.png?raw=true)
 
+
+## To enable the User Management Modules
+
+### Step 1
+
+Publish all files from Spatie Service Provider
+
+```bash
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+
+Then publish all files from our package for User Management
+
+```bash
+php artisan vendor:publish --tag=cms-usermanagement
+```
+
+Then run this command to clear cache for routes and others
+
+```bash
+php artisan optimize:clear
+```
+
+### Step 2
+Include this in `routes/web.php`
+
+```bash
+// Include user management routes/web.php
+include __DIR__.'/usermanagement.php';
+```
+
+### Step 3
+
+Update the `Models/User.php`, add this following code for spatie and guard name
+
+```bash
+use Spatie\Permission\Traits\HasRoles;
+
+
+use HasRoles;
+
+public $guard_name = 'sanctum';
+```
+
+### Step 4
+
+Then add this to `database/DatabaseSeeder`
+
+```bash
+$this->call(PermissionSeeder::class);
+$this->call(RoleSeeder::class);
+$this->call(UserSeeder::class);
+```
+
+### Step 5
+Run migrate refresh and seed initial user, role, and permissions data
+
+```bash
+php artisan optimize:clear
+php artisan migrate:fresh
+php artisan db:seed
+```
+
 ## License
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
