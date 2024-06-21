@@ -371,6 +371,8 @@ Update the `Resources/js/Pages/SidebarLayouts.vue` to include the Users, Roles, 
     </li>
 ```
 
+### Step 8
+Test it.
 
 ## License
 
