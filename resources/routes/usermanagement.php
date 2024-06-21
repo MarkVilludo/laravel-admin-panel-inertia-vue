@@ -1,16 +1,13 @@
 <?php
 
-use App\Http\Controllers\ACL\PermissionController;
-use App\Http\Controllers\ACL\RoleController;
-use App\Http\Controllers\ACL\RolePermissionController;
-use App\Http\Controllers\ACL\UserController;
-use App\Http\Controllers\ACL\UserPermissionController;
-use App\Http\Controllers\ACL\UserRoleController;
+use App\Http\Controllers\UserManagement\PermissionController;
+use App\Http\Controllers\UserManagement\RoleController;
+use App\Http\Controllers\UserManagement\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
 // Routes related to ACL (Access Control List)
 
-Route::resource('/user-management', UserController::class)->names([
+Route::resource('/user-management', UserManagementController::class)->names([
     'index'   => 'user-management.index',
     'store'   => 'user-management.store',
     'update'  => 'user-management.update',

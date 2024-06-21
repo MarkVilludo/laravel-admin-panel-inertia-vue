@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
-class UserService
+class UserManagementService
 {
     public function showData($request, $moduleName)
     {
