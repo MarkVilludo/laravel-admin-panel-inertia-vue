@@ -16,7 +16,7 @@
             "role": "Back end developer"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "alpha",
     "require": {
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^1.0",
