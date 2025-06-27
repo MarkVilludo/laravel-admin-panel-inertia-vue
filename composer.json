@@ -19,7 +19,7 @@
     "minimum-stability": "alpha",
     "require": {
         "php": "^8.2",
-        "inertiajs/inertia-laravel": "^1.0 || ^2.0"
+        "inertiajs/inertia-laravel": "^1.0 || ^2.0",
         "laravel/jetstream": "^5.1",
         "laravel/sanctum": "^4.0",
         "tightenco/ziggy": "^2.0",
